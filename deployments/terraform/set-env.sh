@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-
-DATAFILE="$PWD/$1"
+DIR=$(pwd)
+DATAFILE="$DIR/$1"
 
 BUCKET=$(sed -nr 's/^google_bucket_name\s*=\s*"([^"]*)".*$/\1/p'             "$DATAFILE")
 PROJECT=$(sed -nr 's/^google_project_id\s*=\s*"([^"]*)".*$/\1/p'             "$DATAFILE")
@@ -55,9 +55,9 @@ terraform {
   }
 }
 EOF
-cat "$PWD/backend.tf"
+cat "$DIR/backend.tf"
 
-GOOGLE_APPLICATION_CREDENTIALS="${PWD}/${CREDENTIALS}"
+GOOGLE_APPLICATION_CREDENTIALS="${DIR}/${CREDENTIALS}"
 export GOOGLE_APPLICATION_CREDENTIALS
 export DATAFILE
 /bin/rm -rf "$$PWD/.terraform" 2>/dev/null

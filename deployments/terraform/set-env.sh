@@ -55,9 +55,9 @@ terraform {
   }
 }
 EOF
-cat "$DIR/backend.tf"
+cat "$PWD/backend.tf"
 
-GOOGLE_APPLICATION_CREDENTIALS="${DIR}/${CREDENTIALS}"
+GOOGLE_APPLICATION_CREDENTIALS="${PWD}/${CREDENTIALS}"
 export GOOGLE_APPLICATION_CREDENTIALS
 export DATAFILE
 /bin/rm -rf "$DIR/.terraform" 2>/dev/null

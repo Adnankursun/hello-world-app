@@ -15,7 +15,7 @@ variable  "deployment_image" {
     default = "docker.bugdalorian.com/hello-world-app-dev-feature:1457f11"
 }
 variable "deployment_environment" {
-    default = "qa"
+    default = "dev"
 }
 
 variable "deployment_endpoint" {

@@ -12,7 +12,7 @@ output "application_endpoint" {
     value = "${lookup(var.deployment_endpoint, "${var.deployment_environment}")}.${var.google_domain_name}"
 }
 variable  "deployment_image" {
-    default = "docker.bugdalorian.com/hello-world-app-dev-feature:1457f11"
+    default = "docker.bugdalorian.com/hello-world-app-dev-feature:620ce0e"
 }
 variable "deployment_environment" {
     default = "dev"
@@ -30,7 +30,4 @@ variable "deployment_endpoint" {
 }
 variable "google_domain_name" {
     default = "bugdalorian.com"
-}
-variable "google_bucket_name" {
-    default = "adnan-fuchicorp"
 }

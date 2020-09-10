@@ -1,30 +1,38 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
 DIR=$(pwd)
 DATAFILE="$DIR/$1"
+#
+# FuchiCorp common script to set up Google terraform environment variables
+# these all variables should be created on your config file before you run script.
+# <ENVIRONMENT> <BUCKET> <DEPLOYMENT> <PROJECT> <CREDENTIALS>
 
+if [ ! -f "$DATAFILE" ]; then
+  echo "setenv: Configuration file not found: $DATAFILE"
+  return 1
+fi
 BUCKET=$(sed -nr 's/^google_bucket_name\s*=\s*"([^"]*)".*$/\1/p'             "$DATAFILE")
 PROJECT=$(sed -nr 's/^google_project_id\s*=\s*"([^"]*)".*$/\1/p'             "$DATAFILE")
 ENVIRONMENT=$(sed -nr 's/^deployment_environment\s*=\s*"([^"]*)".*$/\1/p'    "$DATAFILE")
 DEPLOYMENT=$(sed -nr 's/^deployment_name\s*=\s*"([^"]*)".*$/\1/p'            "$DATAFILE")
 CREDENTIALS=$(sed -nr 's/^credentials\s*=\s*"([^"]*)".*$/\1/p'               "$DATAFILE") 
 
-
-if [ ! -f "$DATAFILE" ]; then
-    echo "setenv: Configuration file not found: $DATAFILE"
-    return 1
-fi
-
 if [ -z "$ENVIRONMENT" ]
 then
-    echo "setenv: 'environment' variable not set in configuration file."
+    echo "setenv: 'deployment_environment' variable not set in configuration file."
     return 1
 fi
 
 if [ -z "$BUCKET" ]
 then
-  echo "Inside <$DATAFILE> the <google_bucket_name> not found trying to find from <deployment_configuration.tfvars>"
-  BUCKET=$(sed -nr 's/^google_bucket_name\s*=\s*"([^"]*)".*$/\1/p'   "$PWD/deployment_configuration.tfvars")
-  echo "Using FuchiCorp Google Bucket name for deployment. <google_bucket_name>: <$BUCKET>"
+  echo "setenv: 'google_bucket_name' variable not set in configuration file."
+  return 1
+fi
+
+if [ -z "$PROJECT" ]
+then
+    echo "setenv: 'google_project_id' variable not set in configuration file."
+    return 1
 fi
 
 if [ -z "$CREDENTIALS" ]
@@ -39,14 +47,7 @@ then
     return 1
 fi
 
-if [ -z "$PROJECT" ]
-then
-  echo "Inside <$DATAFILE> the <google_project_id> not found trying to find from <deployment_configuration.tfvars>"
-  BUCKET=$(sed -nr 's/^google_project_id\s*=\s*"([^"]*)".*$/\1/p'   "$PWD/deployment_configuration.tfvars")
-  echo "Using Project name for deployment. <google_project_id>: <$PROJECT>"
-fi
-
-cat << EOF > "$PWD/backend.tf"
+cat << EOF > "$DIR/backend.tf"
 terraform {
   backend "gcs" {
     bucket  = "${BUCKET}"
@@ -60,7 +61,7 @@ cat "$DIR/backend.tf"
 GOOGLE_APPLICATION_CREDENTIALS="${DIR}/${CREDENTIALS}"
 export GOOGLE_APPLICATION_CREDENTIALS
 export DATAFILE
-/bin/rm -rf "$$PWD/.terraform" 2>/dev/null
-##/bin/rm -rf "$PWD/hello-world.tfvars" 2>/dev/null
+/bin/rm -rf "$DIR/.terraform" 2>/dev/null
+/bin/rm -rf "$PWD/common_configuration.tfvars" 2>/dev/null
 echo "setenv: Initializing terraform"
 terraform init #> /dev/null

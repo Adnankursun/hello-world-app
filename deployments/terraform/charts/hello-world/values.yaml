@@ -5,16 +5,19 @@
 replicaCount: 5
 
 image:
-  repository:  ${deployment_image}
+  repository: ${deployment_image}
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+
+
 service:
   type: ClusterIP
   port: 80
+
 
 ingress:
   enabled: true
@@ -23,9 +26,9 @@ ingress:
     cert-manager.io/cluster-issuer: letsencrypt-prod
   hosts:
     - host: ${deployment_endpoint}
-      paths: 
+      paths:
       - /
-  tls: 
+  tls:
   - secretName: hello-adnan
     hosts:
     - ${deployment_endpoint}
@@ -35,7 +38,7 @@ globalEnvironments:
   enabled: true
   environments:
   - name: ENVIRONMENT
-    value: qa
+    value: dev
 
 
 resources: {}

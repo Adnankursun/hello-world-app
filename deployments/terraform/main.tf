@@ -12,7 +12,11 @@ output "application_endpoint" {
     value = "${lookup(var.deployment_endpoint, "${var.deployment_environment}")}.${var.google_domain_name}"
 }
 variable  "deployment_image" {
+<<<<<<< HEAD
     default = "docker.bugdalorian.com/hello-world-app-dev-feature:64fd553"
+=======
+    default = ""
+>>>>>>> 64fd5539927544b9d3a128e94880f9cc1bf0a537
 }
 variable "deployment_environment" {
     default = "dev"

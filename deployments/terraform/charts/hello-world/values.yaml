@@ -5,7 +5,7 @@
 replicaCount: 5
 
 image:
-  repository: ${deployment_image}
+  repository: docker.bugdalorian.com/hello-world-app-dev-feature:64fd553
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

@@ -1,13 +1,24 @@
 # Local .terraform directories
+
+*tfvars*
+*.state*
+*.tfstate*
+*.terraform*
+common-service-account.json
+*backend.tf*
+*cache*
+set-env
+*fuchicorp-service-account.json*
+.vscode/settings.json
+*config.json
 **/.terraform/*
 
 # .tfstate files
 *.tfstate
 *.tfstate.*
-
+*.tfvars
 # Crash log files
 crash.log
-
 # Ignore any .tfvars files that are generated automatically for each Terraform run. Most
 # .tfvars files are managed as part of configuration and so should be included in
 # version control.

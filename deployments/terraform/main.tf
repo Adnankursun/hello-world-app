@@ -11,9 +11,11 @@ module "academy-deploy" {
 output "application_endpoint" {
     value = "${lookup(var.deployment_endpoint, "${var.deployment_environment}")}.${var.google_domain_name}"
 }
+
 variable  "deployment_image" {
-    default = "docker.bugdalorian.com/hello-world-app-dev-feature:64fd553"
+    default = "docker.bugdalorian.com/hello-world-app-dev-feature:latest"
 }
+
 variable "deployment_environment" {
     default = "dev"
 }

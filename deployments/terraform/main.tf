@@ -13,7 +13,7 @@ output "application_endpoint" {
 }
 
 variable  "deployment_image" {
-    default = "docker.bugdalorian.com/hello-world-app-dev-feature:dac201f"
+    default = "docker.bugdalorian.com/hello-world-app-dev-feature:	17ada4b"
 }
 
 variable "deployment_environment" {

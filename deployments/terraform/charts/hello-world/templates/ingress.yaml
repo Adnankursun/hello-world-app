@@ -33,8 +33,4 @@ spec:
               servicePort: http
         {{- end }}
   {{- end }}
-<<<<<<qa-feature/hello-world
 {{- end }}
-=======
-{{- end }}
-

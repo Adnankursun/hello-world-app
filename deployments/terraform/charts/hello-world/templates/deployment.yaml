@@ -28,14 +28,14 @@ spec:
           - name: http
             containerPort: 5000
             protocol: TCP
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 5000
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 5000
+        #livenessProbe:
+        # httpGet:
+        #    path: /
+        #    port: 5000
+        #readinessProbe:
+        #  httpGet:
+        #    path: /
+        #    port: 5000
 
 {{- if .Values.globalEnvironments.enabled }}
         env:
